@@ -76,8 +76,10 @@ def tweet_get():
         })
 
     resp = jsonify(*tweets)
-    if len(tweets) <= 1:
+    if len(tweets) == 1:
         resp.set_data('[\n' + resp.get_data().decode("utf-8").strip() + '\n]')
+    if len(tweets) == 0:
+        resp.set_data('[]')
     return resp
 
 

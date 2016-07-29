@@ -140,3 +140,5 @@ crashlytics.properties
 crashlytics-build.properties
 
 *.db
+
+nohup*

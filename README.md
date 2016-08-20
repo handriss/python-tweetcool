@@ -79,6 +79,7 @@ The client is responsible to represent the previously saved tweets and to collec
 
 The client should be a console application running until the user enters "exit" or presses Ctrl+D.
 It should run in a loop, and with every running it should perform the following:
+
 1. Query tweets from the server
 1. Format and print the previous tweets. Example: `Chewbacca <1977-05-25 20:16:10>: Uuuuuuurr Ahhhhrrr Uhrrr`
 1. Ask the user for message input. (also allow refreshing the list and exiting)
@@ -89,6 +90,7 @@ Also handle all possible exceptions, even Ctrl+D exiting the application.
 
 If you managed to finish with the client to **match the excepted behaviour**, you can extend it with a better interface.
 There are several ways to improve this basic terminal interface:
+
 - You can write a UI with curses, where the messages are refreshing themselves, while the user enters the message
 - You can use Tkinter, PyGame, Kivy or any other library or framework to create a great UI
 - Also you could try a Flask and web based client, where the client is also a webserver.

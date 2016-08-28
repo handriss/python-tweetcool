@@ -36,14 +36,31 @@ class Client():
 
         self.menu()
 
+    def post_tweet(self, message):
+        payload = {"content": str(message), "poster": self.user}
+        requests.post(self.route, json=payload)
+
+    def refresh(self):
+        for i in requests.get(self.route).json():
+            print(i["poster"], "<" + str(datetime.datetime.utcfromtimestamp(int(i["timestamp"]))) + ">:", i["content"])
+
     def menu(self):
         while True:
-            command = input("Give in command: ")
             try:
+                command = input('''
+---------------- TWITTERCOOL ------------------
+-----------------------------------------------
+Enter:
+   post -- to post your thoughts;
+   refresh -- to refresh the timeline;
+   exit or CTRL+D -- to quit the application.
+-----------------------------------------------
+
+Command: ''')
                 if command == "refresh":
-                    pass
+                    self.refresh()
                 elif command == "post":
-                    pass
+                    self.post_tweet(input("\nEnter your message: "))
                 elif command == "exit":
                     exit()
                 else:

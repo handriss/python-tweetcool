@@ -1,5 +1,8 @@
 import argparse
 import ipaddress
+import requests
+import json
+import datetime
 
 
 parser = argparse.ArgumentParser()
@@ -27,4 +30,50 @@ if not(1024 < server["port"] < 65535):
 
 server["address"] = 'http://' + server["host"].compressed + ':' + str(server["port"])
 
-# Logic starts here... somewhere..
+
+route = server["address"]+"/tweet"
+user = "Húrin"
+
+
+def get_tweets():
+    return requests.get(route).json()
+
+
+def format_tweets():
+    for i in get_tweets():
+        print(i["poster"], "<" + str(datetime.datetime.utcfromtimestamp(int(i["timestamp"]))) + ">:", i["content"])
+    print("")
+
+
+def post_tweet(message):
+    payload = {"content": str(message), "poster": user}
+    requests.post(route, json=payload)
+
+
+def main_menu():
+    print("Available commands: \n\n refresh: Refresh the latest tweets \n exit: "
+          "Exit the program \n post: Post a tweet\n")
+    command = input("Type in command: ")
+    return command
+
+
+print("Tweetcool client starting...")
+while True:
+    try:
+        command = main_menu()
+        if command == "refresh":
+            format_tweets()
+        elif command == "exit":
+            exit()
+        elif command == "post":
+            message = input("Type your message: ")
+            post_tweet(message)
+            format_tweets()
+        else:
+            print("Unknow command. Try again.\n")
+    except EOFError:
+        print("An error occured. ")
+        exit()
+    finally:
+        # print("Exiting tweetcool client...")
+        print("\n")
